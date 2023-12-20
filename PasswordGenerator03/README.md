@@ -26,7 +26,6 @@ The `passwordGenerator` function is used to generate a new password. The functio
 
 The function then uses a `for` loop to generate the password. For each character in the password
 
-![Alt text](image.png)
 
 ![image](https://github.com/Shivraj10t/01React/assets/86354254/5906ced2-e858-44b9-a8b2-0f0ba7c0187c)
 
