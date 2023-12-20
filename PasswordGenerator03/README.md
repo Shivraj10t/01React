@@ -26,4 +26,6 @@ The `passwordGenerator` function is used to generate a new password. The functio
 
 The function then uses a `for` loop to generate the password. For each character in the password
 
+![Alt text](image.png)
+
  
