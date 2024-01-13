@@ -8,7 +8,7 @@ function Github() {
     <div className="p-10 bg-slate-500 text-white justify-self-center">
       Github : {data.followers}
       <h3>  {data.name}</h3>
-      {/* <img src={data.avatar_url}  alt="git img" width={300} /> */}
+      <img src={data.avatar_url}  alt="git img" width={300} />
       <article>{data.bio}</article>
     </div>
   );
