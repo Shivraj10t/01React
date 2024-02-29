@@ -2,28 +2,31 @@ import { useForm } from "react-hook-form";
 import authServices from "../appwrite/auth";
 import { login as authLogin } from "../store/authSlice";
 import { useState } from "react";
-import { useNavigate, Link, useNavigate } from "react-router-dom";
-import { Button, Input, Logo, Select } from "./index";
+import { useNavigate, Link } from "react-router-dom";
+import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
-  const login = async (data) => {
-    setError("");
+  const login = async(data) => {
+    setError("")
     try {
-      const session = await authServices.login(data);
-      if (session) {
-        const userData = await authServices.getCurrentUser();
-        if (userData) dispatch(authLogin(userData));
-        navigator("/");
-      } else {
-      }
+        const session = await authServices.login(data)
+        //console.log('session',session)
+        if (session) {
+            const userData = await authServices.getCurrentUser()
+            if(userData) dispatch(authLogin(userData));
+            navigate("/")
+        }else {
+          setError(session.message)
+        }
     } catch (error) {
-      setError(error);
+        setError(error.message)
     }
-  };
+}
+
   return (
     <div className="flex items-center justify-center w-full">
       <div

@@ -10,17 +10,18 @@ function SignUp() {
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const navagate = useNavigate();
+  const navigate = useNavigate();
 
   const createAccount = async (data) => {
     setError("");
+
     try {
       // send data to server and get token in return. If error, display the error message.
       await authservice.createAccount(data).then(async (data) => {
         if (data) {
           const userData = await authservice.getCurrentUser();
           if (userData) dispatch(login(userData));
-          navagate("/");
+          navigate("/");
         } else {
           setError(error);
         }

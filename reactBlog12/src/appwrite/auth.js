@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import conf from "../conf/conf";
 import { Client, Account, ID } from "appwrite";
 
@@ -12,7 +13,6 @@ export class AuthService {
   }
   //create account
   async createAccount({ email, password, name }) {
-    // eslint-disable-next-line no-useless-catch
     try {
       const userAccount = await this.account.create(
         ID.unique(),
@@ -21,41 +21,37 @@ export class AuthService {
         name
       );
       if (userAccount) {
-        //user account create successfuly then loin this user
-        await this.login({ email, password });
+        // call another method
+        return this.login({ email, password });
       } else {
         return userAccount;
       }
-      console.log(userAccount);
     } catch (error) {
-      throw error;
+      console.log("Appwrite createAccount Error:: ", error);
     }
   }
   //user Login
   async login({ email, password }) {
-    // eslint-disable-next-line no-useless-catch
     try {
-      return await this.account.createSession(email, password);
+      return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
-      throw error;
+      return error;
     }
   }
   //get user states login or not
   async getCurrentUser() {
-    // eslint-disable-next-line no-useless-catch
     try {
       return await this.account.get();
     } catch (error) {
-     console.log("Appwrite getCurrentUser Error:: ",error)
+      console.log("Appwrite getCurrentUser Error:: ", error);
     }
   }
   //user logout
   async logout() {
-    // eslint-disable-next-line no-useless-catch
     try {
       return await this.account.deleteSessions();
     } catch (error) {
-      console.log("Appwrite getCurrentUser Error:: ",error)
+      console.log("Appwrite logout Error:: ", error);
     }
   }
 }

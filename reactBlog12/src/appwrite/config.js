@@ -14,23 +14,25 @@ export class Service {
     this.bucket = new Storage(this.client);
   }
   //
-  async createPost({ title, slug, content, featureImge, status, userId }) {
+  async createPost({ title, slug, content, featureImage, status, userId }) {
     try {
       return await this.databases.createDocument(
         conf.appwriteDatabaseId, // Database ID
         conf.appwriteCollectionId, // Collection ID
         slug,
-        { title, content, featureImge, status, userId }
+        { title, content, featureImage, status, userId }
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
-  async updatePost(slug, { title, content, featureImge, status }) {
+  async updatePost(slug, { title, content, featureImage, status }) {
     try {
       return await this.databases.updateDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         slug,
-        { title, content, featureImge, status }
+        { title, content, featureImage, status }
       );
     } catch (error) {
       console.log(error);
@@ -80,6 +82,7 @@ export class Service {
       );
     } catch (error) {
       console.log(error);
+      return false;
     }
   }
   async deleteFile(fileId) {
@@ -91,9 +94,9 @@ export class Service {
       return false;
     }
   }
-  async previewFile(fileId) {
+  previewFile(fileId) {
     try {
-      return await this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
+      return this.bucket.getFilePreview(conf.appwriteBucketId, fileId).href;
     } catch (error) {
       console.log(error);
     }
